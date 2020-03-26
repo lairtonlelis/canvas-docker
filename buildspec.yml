@@ -10,11 +10,11 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image for $REVISION ...
-      - docker build -t lbjay/canvas-docker:$RELEASE_TAG --build-arg REVISION=$REVISION .
-      - if [ "$LATEST" ] ; then docker tag lbjay/canvas-docker:$RELEASE_TAG lbjay/canvas-docker:latest ; fi
+      - docker build -t lairtonlelis/canvas-docker:$RELEASE_TAG --build-arg REVISION=$REVISION .
+      - if [ "$LATEST" ] ; then docker tag lairtonlelis/canvas-docker:$RELEASE_TAG lairtonlelis/canvas-docker:latest ; fi
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image for $REVISION...
-      - docker push lbjay/canvas-docker:$RELEASE_TAG
-      - if [ "$LATEST" ] ; then docker push lbjay/canvas-docker:latest ; fi
+      - docker push lairtonlelis/canvas-docker:$RELEASE_TAG
+      - if [ "$LATEST" ] ; then docker push lairtonlelis/canvas-docker:latest ; fi

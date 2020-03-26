@@ -1,0 +1,17 @@
+canvas.test {
+    log stdout
+    tls /root/certs/canvas.test.pem /root/certs/canvas.test-key.pem
+
+    proxy / http://canvas:4000 {
+        transparent
+        header_upstream Host "canvas.test"
+    }
+}
+*.lvh.me {
+    log stdout
+    tls /root/certs/_wildcard.lvh.me.pem /root/certs/_wildcard.lvh.me-key.pem
+
+    proxy / 10.106.19.101:3000 {
+        transparent
+    }
+}

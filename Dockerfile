@@ -12,8 +12,8 @@ RUN apt-get update \
     && apt-get -y install curl software-properties-common \
     && add-apt-repository -y ppa:brightbox/ruby-ng \
     && apt-get update \
-    && apt-get install -y ruby2.4 ruby2.4-dev supervisor redis-server \
-        zlib1g-dev libxml2-dev libxslt1-dev libsqlite3-dev postgresql \
+    && apt-get install -y ruby2.4 ruby2.4-dev supervisor \
+        zlib1g-dev libxml2-dev libxslt1-dev libsqlite3-dev \
         postgresql-contrib libpq-dev libxmlsec1-dev curl make g++ git \
         unzip fontforge libicu-dev
 
@@ -52,7 +52,6 @@ COPY assets/start.sh /opt/canvas/start.sh
 RUN chmod 755 /opt/canvas/*.sh
 
 COPY assets/supervisord.conf /etc/supervisor/supervisord.conf
-COPY assets/pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
 RUN sed -i "/^#listen_addresses/i listen_addresses='*'" /etc/postgresql/9.3/main/postgresql.conf
 
 RUN cd /opt/canvas \
@@ -63,7 +62,6 @@ RUN cd /opt/canvas \
 WORKDIR /opt/canvas/canvas-lms
 
 COPY assets/database.yml config/database.yml
-COPY assets/redis.yml config/redis.yml
 COPY assets/cache_store.yml config/cache_store.yml
 COPY assets/development-local.rb config/environments/development-local.rb
 COPY assets/outgoing_mail.yml config/outgoing_mail.yml
@@ -84,10 +82,6 @@ RUN service postgresql start && /opt/canvas/dbinit.sh
 RUN chown -R canvasuser: /opt/canvas
 RUN chown -R canvasuser: /tmp/attachment_fu/
 
-# postgres
-EXPOSE 5432
-# redis
-EXPOSE 6379
 # canvas
 EXPOSE 3000
 
