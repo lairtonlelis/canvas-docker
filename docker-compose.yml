@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   canvas:
-    image: lairtonlelis/canvas-docker
+    image: lairtonlelis/canvas-docker:latest
     environment:
       RAILS_PORT: 4000
       PORT: 4000
