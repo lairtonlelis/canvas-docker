@@ -5,6 +5,7 @@ phases:
     commands:
       - echo Logging in to Docker Hub...
       - docker login -p $DOCKER_PASS -u $DOCKER_USER
+      - export REVISION=`git rev-parse --short HEAD`
       - export RELEASE_TAG=`echo $REVISION | sed 's/\//-/g'`
   build:
     commands:
